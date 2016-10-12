@@ -24,6 +24,46 @@
              [:p "The inital design will be to define a devcard for each clacks tower
                   in the system"]]))
 
+
+;; Define data to display in the cards representing a snapshot of the clacks towers
+
+(def tower-001
+  {:row1 [1 1 0 0]
+   :row2 [0 1 1 0]})
+
+(def tower-002
+  {:row1 [1 1 0 0]
+   :row2 [0 1 1 0]})
+
+(def tower-003
+  {:row1 [1 1 0 0]
+   :row2 [0 1 1 0]})
+
+
+;; Define cards to represent several towers in the Clacks system.
+
+(defcard first-tower
+  (sab/html [:div
+             [:h1 "First clacks Tower"]
+             [:p "A simple devcard showing the raw 1's and 0's from a Clacks Tower One"]
+             [:div (tower-001 :row1)]
+             [:div (tower-001 :row2)]]))
+
+(defcard second-tower
+  (sab/html [:div
+             [:h1 "Second clacks Tower"]
+             [:p "A simple devcard showing the raw 1's and 0's from a Clacks Tower Two"]
+             [:div (tower-002 :row1)]
+             [:div (tower-002 :row2)]]))
+
+(defcard third-tower
+  (sab/html [:div
+             [:h1 "First clacks Tower"]
+             [:p "A simple devcard showing the raw 1's and 0's from a Clacks Tower Three"]
+             [:div (tower-003 :row1)]
+             [:div (tower-003 :row2)]]))
+
+
 (defn main []
   ;; conditionally start the app based on whether the #main-app-area
   ;; node is on the page
