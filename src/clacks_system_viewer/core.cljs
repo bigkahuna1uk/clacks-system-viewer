@@ -83,6 +83,37 @@ The project template sets up the project.clj file for a ClojureScript project an
              [:div (tower-003 :row2)]]))
 
 
+(def clacks-systems ["Ankh-Morpork" "Sto Plains" "Ramtops" "The Unnamed Continent" "Genua" "Uberwald"])
+
+(defcard ankh-morpork-tower
+  (sab/html [:div
+             [:h1 "Ankh-Morpork Tower"]
+             [:p "Tower located on the outskirts of Ankh-Morpork on Nap Hill"]
+             [:p "Using basic styles from the 2048 devcards example, displaying a part of the clacks message"]
+              [:div.cells
+               [:div {:class "cell xpos-1 ypos-1"} (first (tower-001 :row1))]
+               [:div {:class "cell xpos-1 ypos-2"} (first (tower-001 :row2))]]]))
+
+(defcard second-tower
+  (sab/html [:div
+             [:h1 "Sto Plains Tower"]
+             [:p "Using basic styles from the 2048 devcards example, displaying the whole clacks code"]
+             [:p "I'm still figuring out the 2048 style sheet..."]
+             [:div.cells
+               [:div {:class "cell xpos-1 ypos-1"} (nth (tower-002 :row1) 0)]
+               [:div {:class "cell xpos-2 ypos-1"} (nth (tower-002 :row1) 1)]
+               [:div {:class "cell xpos-3 ypos-1"} (nth (tower-002 :row1) 2)]
+               [:div {:class "cell xpos-4 ypos-1"} (nth (tower-002 :row1) 3)]]
+              [:div.cells
+               [:div {:class "cell xpos-1 ypos-2"} (nth (tower-002 :row2) 0)]
+               [:div {:class "cell xpos-2 ypos-2"} (nth (tower-002 :row2) 1)]
+               [:div {:class "cell xpos-3 ypos-2"} (nth (tower-002 :row2) 2)]
+               [:div {:class "cell xpos-4 ypos-2"} (nth (tower-002 :row2) 3)]]]))
+
+
+(defcard what-is-a-clacks-tower
+  "The ground floor is a storeroom, the second contains an office, a kitchen and, in out-of-the-way towers, a bunkroom. The top floor contains the controls, two chairs face identical control boards on either side, each connected to the panels on the opposite side. There is a keyboard, levers, and pedals. ")
+
 (defn main []
   ;; conditionally start the app based on whether the #main-app-area
   ;; node is on the page
