@@ -11,18 +11,37 @@
 ;; a name for a card.  In this case the card simply displays the text of the string.
 ;; This text will process markdown symbols such as # for heading styles
 (defcard
-  "# A Clacks Tower system visualised by DevCards")
+  "# A Clacks Tower system visualised by DevCards
+
+Based on the [Two-Zero DevCards example](https://github.com/bhauman/devcards/blob/master/example_src/devdemos/two_zero.cljs)
+and using the [Two-Zero CSS styles](https://github.com/bhauman/devcards/blob/master/example-resources/public/devcards/css/two-zero.css).
+
+This project was created with the Leiningen devcards template: `lein new devcards clacks-system-viewer`
+
+The project template sets up the project.clj file for a ClojureScript project and includes the
+[Sablono Library](https://github.com/r0man/sablono) to generate html from Clojure code.")
 
 ;; A card can include simple text or html content.
 ;; The sablono library generates html for you, using Clojure keywords & vectors
 ;; to represent the structure of the html you require.
 (defcard introduction
-  (sab/html [:div
-             [:h1 "Overview of the Clacks System Viewer"]
-             [:p "Using the Sablono library makes it much easier to create your html
-                  structure without having to manage html tags"]
-             [:p "The inital design will be to define a devcard for each clacks tower
-                  in the system"]]))
+  (sab/html
+   [:div
+    [:h1 "Overview of the Clacks System Viewer"]
+    [:p "The Clacks System Viewer displays the light patterns from all of the
+         Clacks Towers in the system as they pass through a message."]
+    [:p "Each Clacks Tower is represented by a grid of cells, 4 cells wide
+         and 2 cells high."]
+    [:p "Each cell represents either a 1 or 0 value.  If the light in a cell
+         is off, that represents a 0.  If the light is on, that represents a 1."]
+
+    [:p "Using the "
+        [:a {:href "https://github.com/r0man/sablono"} "Sablono Library"]
+        " makes it much easier to create your html structure without having to
+         manage html tags.  Instead you create a vector with the first element
+         being a keyword representation of an html tag (eg. :h1, :p, :div)."]
+    [:p "The inital design will be to define a devcard for each clacks tower
+         in the system"]]))
 
 
 ;; Define data to display in the cards representing a snapshot of the clacks towers
