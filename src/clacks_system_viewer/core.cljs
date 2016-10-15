@@ -114,6 +114,122 @@ The project template sets up the project.clj file for a ClojureScript project an
 (defcard what-is-a-clacks-tower
   "The ground floor is a storeroom, the second contains an office, a kitchen and, in out-of-the-way towers, a bunkroom. The top floor contains the controls, two chairs face identical control boards on either side, each connected to the panels on the opposite side. There is a keyboard, levers, and pedals. ")
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Generating a board - code taken from devcard examples
+
+#_(def to-pixel-pos
+(def cell-size 106)
+(def cell-border 15)
+
+(def to-pixel-pos
+  (fn [x] (+ cell-border (* x (+ cell-size cell-border)))))
+
+(defn pixel-pos [pos]
+  (str (to-pixel-pos pos) "px"))
+
+
+(defn board-cell [{:keys [top left id v highlight reveal]}]
+  (let [translate (str "translate3d("
+                       (pixel-pos left) ","
+                       (pixel-pos top) ", 0px)")]
+    (sab/html
+     [:div.cell-pos { :style { "-webkit-transform" translate
+                              "-moz-transform" translate
+                              "transform" translate }
+                     :key (str (name id)) }
+      [:div { :class (str "cell cell-num-" v
+                          (when highlight " highlight")
+                          (when reveal " reveal")) } v]])))
+
+
+;; Create background cells of the board, 4 cells width, 2 cells high.
+(defn background-cells []
+  (for [top (range 2) left (range 4)]
+    (sab/html
+     [:div.cell-pos.cell-empty
+      { :style { :top (pixel-pos top)
+                :left (pixel-pos left)}}])))
+
+
+(defn game-board [data]
+  (sab/html
+   [:div.board-area
+    [:div.background (background-cells)]
+    [:div.cells (map board-cell data)]]))
+
+;; Generate an empty Clacks Tower display
+;; This does currently generate a warning in the javascript console as each cell does not have a unique id
+;; Warning: Each child in an array or iterator should have a unique "key" prop.
+#_(defcard board-style
+  "## Board Style
+  Let's start by creating the style for the board.
+  The board is a 4x2 board. It will have one container with 8
+  absolutely positioned cells in it. These cells will mark where the
+  potential locations for the game tiles."
+  (game-board []))
+
+
+;; Example game board with different coloured cells from 2048 example
+(defcard board-with-cells
+  "### Cell Style
+   Then we'll work on the style for the cells. The hard part is
+   getting the colors and the font sizes correct."
+  (game-board [{ :top 0 :left 0 :v 2 :id :t1}
+               { :top 0 :left 1 :v 4 :id :t2}
+               { :top 0 :left 2 :v 8 :id :t3}
+               { :top 0 :left 3 :v 16 :id :t4}
+               { :top 1 :left 0 :v 32 :id :t5}
+               { :top 1 :left 1 :v 64 :id :t6}
+               { :top 1 :left 2 :v 128 :id :t7}
+               { :top 1 :left 3 :v 256 :id :t8}]))
+
+(defcard tower-001-display
+  "### Cell Style
+   Then we'll work on the style for the cells. The hard part is
+   getting the colors and the font sizes correct."
+  (game-board [{ :top 0 :left 0 :v 1 :id :t1}
+               { :top 0 :left 1 :v 1 :id :t2}
+               { :top 0 :left 2 :v 0 :id :t3}
+               { :top 0 :left 3 :v 1 :id :t4}
+               { :top 1 :left 0 :v 0 :id :t5}
+               { :top 1 :left 1 :v 0 :id :t6}
+               { :top 1 :left 2 :v 1 :id :t7}
+               { :top 1 :left 3 :v 1 :id :t8}]))
+
+(defcard tower-002-display
+  "### Cell Style
+   Then we'll work on the style for the cells. The hard part is
+   getting the colors and the font sizes correct."
+  (game-board [{ :top 0 :left 0 :v 1 :id :t1}
+               { :top 0 :left 1 :v 1 :id :t2}
+               { :top 0 :left 2 :v 0 :id :t3}
+               { :top 0 :left 3 :v 1 :id :t4}
+               { :top 1 :left 0 :v 0 :id :t5}
+               { :top 1 :left 1 :v 0 :id :t6}
+               { :top 1 :left 2 :v 1 :id :t7}
+               { :top 1 :left 3 :v 1 :id :t8}]))
+
+(defcard clacks-tower-display-off
+  (game-board [{ :top 0 :left 0 :v nil :id :clack1}
+               { :top 0 :left 1 :v nil :id :clack2}
+               { :top 0 :left 2 :v nil :id :clack3}
+               { :top 0 :left 3 :v nil :id :clack4}
+               { :top 1 :left 0 :v nil :id :clack5}
+               { :top 1 :left 1 :v nil :id :clack6}
+               { :top 1 :left 2 :v nil :id :clack7}
+               { :top 1 :left 3 :v nil :id :clack8}]))
+
+(defcard clacks-tower-fault
+  (game-board [{ :top 0 :left 0 :v "X" :id :clack1}
+               { :top 0 :left 1 :v "X" :id :clack2}
+               { :top 0 :left 2 :v "X" :id :clack3}
+               { :top 0 :left 3 :v "X" :id :clack4}
+               { :top 1 :left 0 :v "X" :id :clack5}
+               { :top 1 :left 1 :v "X" :id :clack6}
+               { :top 1 :left 2 :v "X" :id :clack7}
+               { :top 1 :left 3 :v "X" :id :clack8}]))
+
+
 (defn main []
   ;; conditionally start the app based on whether the #main-app-area
   ;; node is on the page
