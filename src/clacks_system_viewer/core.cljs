@@ -230,6 +230,22 @@ The project template sets up the project.clj file for a ClojureScript project an
                { :top 1 :left 3 :v "X" :id :clack8}]))
 
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; A simple JavaScript interop example
+
+(defonce observed-atom
+  (let [a (atom 0)]
+    (js/setInterval (fn [] (swap! observed-atom inc)) 1000)
+    a))
+
+(defcard atom-observing-card observed-atom)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
 (defn main []
   ;; conditionally start the app based on whether the #main-app-area
   ;; node is on the page
